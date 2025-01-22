@@ -1,13 +1,7 @@
-import fastapi
+from fastapi import FastAPI
 
-app = fastapi.FastAPI(docs_url="/api/docs", redoc_url="/api/redoc")
+from authentication.app.interfaces.api.v1.endpoints.login import router
 
+app = FastAPI(docs_url= "/api/docs", redoc_url= "/api/redoc")
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+app.include_router(router)
