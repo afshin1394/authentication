@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field,field_validator
 import re
 
 class LoginRequestDto(BaseModel):
@@ -8,12 +8,12 @@ class LoginRequestDto(BaseModel):
 
 
      # Class method for validation
-     @classmethod
-     def validate_format(cls, value):
-         if not re.match(r"^\+?\d+$", value):
-             raise ValueError("MSISDN must contain only digits with optional '+'")
+     # @field_validator("msisdn")
+     # def validate_format(cls, value):
+     #     if not re.match(r"^\+?\d+$", value):
+     #         raise ValueError("MSISDN must contain only digits with optional '+'")
+     #     if len(value) not in [11, 13]:
+     #         raise ValueError("MSISDN must be 11 digits (local) or 13 digits (international)")
+     #
+     #     return value
 
-         if len(value) not in [11, 13]:
-             raise ValueError("MSISDN must be 11 digits (local) or 13 digits (international)")
-
-         return value

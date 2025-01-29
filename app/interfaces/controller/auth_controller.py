@@ -19,11 +19,11 @@ class AuthController:
         self.refresh_token_use_case = refresh_token_use_case
 
 
-    async def request_otp(self, request_otp_request : LoginRequestDto)->LoginResponseDTO:
-       return LoginResponseDTO.from_domain(await self.login_use_case.execute(msisdn=request_otp_request.msisdn))
+    async def login(self, login_dto : LoginRequestDto)->LoginResponseDTO:
+       return LoginResponseDTO.from_domain(otp_domain= await self.login_use_case.execute(msisdn=login_dto.msisdn))
 
-    async def verify_otp(self, verify_request_dto : VerifyRequestDTO)->VerifyResponseDTO:
+    async def verify(self, verify_request_dto : VerifyRequestDTO)->VerifyResponseDTO:
        return VerifyResponseDTO.from_domain(token_domain= await self.verify_use_case.execute(session_id=verify_request_dto.session_id,otp_code=verify_request_dto.otp))
 
     async def refresh_token(self, refresh_token_request : RefreshTokenRequestDto)->RefreshTokenResponseDTO:
-       return RefreshTokenResponseDTO(access_token= await self.refresh_token_use_case.execute(refresh_token= refresh_token_request.refresh_token))
+       return RefreshTokenResponseDTO.from_domain(access_token = await self.refresh_token_use_case.execute(refresh_token= refresh_token_request.refresh_token))

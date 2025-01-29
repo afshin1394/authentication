@@ -18,8 +18,5 @@ class VerifyUseCase(BaseUseCase):
 
         if not otp or otp != otp_code:
             raise ValueError("Invalid or expired OTP")
-
-
         tokens = await self.token_service.generate_tokens(session_id= stored_session_id,otp_code= otp_code)
-
         return tokens

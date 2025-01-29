@@ -11,14 +11,15 @@ class AuthRepositoryImpl(AuthRepository):
         await self.redis_client.set(otp, otp, expire=300)
 
     async def get_otp(self, otp: str) -> str:
-        otp_code = await self.redis_client.get(otp)
+        otp_code = await self.redis_client.redis.get(otp)
         return otp_code
 
 
     async def save_session_id(self, session_id: str):
+       print(f"session_id:\n {session_id}")
        await self.redis_client.set(session_id, session_id, expire=120)
 
 
     async def get_session_id(self, session_id: str) -> str:
-        session_id = await self.redis_client.get(session_id)
+        session_id = await self.redis_client.redis.get(session_id)
         return session_id if session_id else None

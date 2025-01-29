@@ -14,7 +14,6 @@ class LoginUseCase(BaseUseCase):
         self.sms_service = sms_service
         self.token_service = token_service
 
-
     async def execute(self, msisdn: str) -> LoginDomain:
         otp_code = str(random.randint(100000, 999999))
         session_id = await self.token_service.generate_session_id(UserDomain(msisdn=msisdn))
